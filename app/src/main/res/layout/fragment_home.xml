@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <EditText
+        android:id="@+id/editTextApellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido" />
+
+    <EditText
+        android:id="@+id/editTextNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre" />
+
+    <EditText
+        android:id="@+id/editTextTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Teléfono" />
+
+    <EditText
+        android:id="@+id/editTextNacionalidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nacionalidad" />
+
+    <EditText
+        android:id="@+id/editTextFechaNacimiento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de Nacimiento (yyyy-MM-dd)" />
+
+    <EditText
+        android:id="@+id/editTextDNI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNI" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/editTextEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estado" />
+
+    <EditText
+        android:id="@+id/editTextPromedio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Promedio" />
+
+    <Button
+        android:id="@+id/buttonAgregar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar" />
+
+    <ListView
+        android:id="@+id/listViewAlumnos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+</LinearLayout>
