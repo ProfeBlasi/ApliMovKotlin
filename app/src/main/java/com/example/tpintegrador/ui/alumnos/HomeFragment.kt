@@ -1,5 +1,6 @@
-package com.example.tpintegrador.ui.home
+package com.example.tpintegrador.ui.alumnos
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,13 @@ class HomeFragment : Fragment() {
         val editTextEstado = binding.editTextEstado
         val editTextPromedio = binding.editTextPromedio
         val buttonAgregar = binding.buttonAgregar
+
+        listViewAlumnos.setOnItemClickListener { parent, view, position, id ->
+            val alumno = alumnosList[position]
+            val intent = Intent(requireContext(), DetalleAlumnoActivity::class.java)
+            intent.putExtra("EXTRA_ALUMNO", alumno)
+            startActivity(intent)
+        }
 
         // Manejar el clic del botón "Agregar"
         buttonAgregar.setOnClickListener {
