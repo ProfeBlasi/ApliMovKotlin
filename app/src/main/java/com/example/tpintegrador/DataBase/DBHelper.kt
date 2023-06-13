@@ -5,13 +5,15 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.tpintegrador.DataBase.Entities.Alumno
+import com.example.tpintegrador.DataBase.Entities.Curso
 
 class DBHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "AlumnoDB.db"
+        private const val DATABASE_NAME = "School.db"
         private const val TABLE_NAME = "alumnos"
         private const val COLUMN_ID = "id"
         private const val COLUMN_APELLIDO = "apellido"
@@ -23,6 +25,10 @@ class DBHelper(context: Context?) :
         private const val COLUMN_EMAIL = "email"
         private const val COLUMN_ESTADO = "estado"
         private const val COLUMN_PROMEDIO = "promedio"
+
+        private const val TABLE_NAME_CURSO = "cursos"
+        private const val COLUMN_ID_CURSO = "id"
+        private const val COLUMN_NOMBRE_CURSO = "nombre"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -38,6 +44,10 @@ class DBHelper(context: Context?) :
                 + "$COLUMN_ESTADO TEXT,"
                 + "$COLUMN_PROMEDIO INTEGER);")
         db.execSQL(createTableQuery)
+        val createTableCursoQuery = ("CREATE TABLE $TABLE_NAME_CURSO ("
+                + "$COLUMN_ID_CURSO INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$COLUMN_NOMBRE_CURSO TEXT NOT NULL);")
+        db.execSQL(createTableCursoQuery)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -62,7 +72,6 @@ class DBHelper(context: Context?) :
 
         return db.insert(TABLE_NAME, null, contentValues)
     }
-
     fun updateAlumno(alumno: Alumno): Int {
         val db = writableDatabase
         val contentValues = ContentValues()
@@ -81,12 +90,10 @@ class DBHelper(context: Context?) :
             arrayOf(alumno.id.toString())
         )
     }
-
     fun deleteAlumno(alumnoId: Long): Int {
         val db = writableDatabase
         return db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(alumnoId.toString()))
     }
-
     @SuppressLint("Range")
     fun getAllAlumnos(): List<Alumno> {
         val alumnos = mutableListOf<Alumno>()
@@ -123,5 +130,44 @@ class DBHelper(context: Context?) :
         }
         cursor.close()
         return alumnos
+    }
+
+    fun insertCurso(curso: Curso): Long {
+        val db = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_NOMBRE, curso.nombre)
+
+        return db.insert(TABLE_NAME_CURSO, null, contentValues)
+    }
+    fun updateCurso(curso: Curso): Int {
+        val db = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_NOMBRE, curso.nombre)
+        return db.update(
+            TABLE_NAME_CURSO, contentValues, "$COLUMN_ID_CURSO = ?",
+            arrayOf(curso.id.toString())
+        )
+    }
+    fun deleteCurso(cursoId: Long): Int {
+        val db = writableDatabase
+        return db.delete(TABLE_NAME_CURSO, "$COLUMN_ID_CURSO = ?", arrayOf(cursoId.toString()))
+    }
+    @SuppressLint("Range")
+    fun getAllCursos(): List<Curso> {
+        val cursos = mutableListOf<Curso>()
+        val db = readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_NAME_CURSO"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID_CURSO))
+                val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE_CURSO))
+
+                val curso = Curso(id, nombre)
+                cursos.add(curso)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return cursos
     }
 }

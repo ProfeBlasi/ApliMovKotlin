@@ -1,4 +1,4 @@
-package com.example.tpintegrador.DataBase
+package com.example.tpintegrador.DataBase.Entities
 
 import android.content.Context
 import android.view.LayoutInflater
