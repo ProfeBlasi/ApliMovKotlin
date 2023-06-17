@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.tpintegrador.DataBase.Alumno
-import com.example.tpintegrador.DataBase.AlumnosAdapter
+import com.example.tpintegrador.DataBase.Entities.Alumno
+import com.example.tpintegrador.DataBase.Entities.AlumnosAdapter
 import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.databinding.FragmentHomeBinding
 

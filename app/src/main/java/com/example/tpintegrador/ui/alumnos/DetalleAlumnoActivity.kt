@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.example.tpintegrador.DataBase.Alumno
+import com.example.tpintegrador.DataBase.Entities.Alumno
 import com.example.tpintegrador.R
 
 class DetalleAlumnoActivity : AppCompatActivity() {

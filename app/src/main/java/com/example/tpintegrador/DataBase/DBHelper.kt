@@ -5,13 +5,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.tpintegrador.DataBase.Entities.Alumno
 
 class DBHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "AlumnoDB.db"
+        private const val DATABASE_NAME = "School.db"
         private const val TABLE_NAME = "alumnos"
         private const val COLUMN_ID = "id"
         private const val COLUMN_APELLIDO = "apellido"
@@ -23,10 +24,18 @@ class DBHelper(context: Context?) :
         private const val COLUMN_EMAIL = "email"
         private const val COLUMN_ESTADO = "estado"
         private const val COLUMN_PROMEDIO = "promedio"
+
+        const val TABLE_NAME_COURSE = "courses"
+        const val COLUMN_ID_COURSE = "id"
+        const val COLUMN_NAME_COURSE = "name"
+        const val COLUMN_NAME_SCHOOL = "school"
+        const val COLUMN_NAME_SHIFT = "shift"
+        const val COLUMN_NAME_ADDRESS = "address"
+        const val COLUMN_NAME_USER_ID = "user_id"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = ("CREATE TABLE $TABLE_NAME ("
+        val createTableStudentQuery = ("CREATE TABLE $TABLE_NAME ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "$COLUMN_APELLIDO TEXT NOT NULL,"
                 + "$COLUMN_NOMBRE TEXT NOT NULL,"
@@ -37,7 +46,15 @@ class DBHelper(context: Context?) :
                 + "$COLUMN_EMAIL TEXT,"
                 + "$COLUMN_ESTADO TEXT,"
                 + "$COLUMN_PROMEDIO INTEGER);")
-        db.execSQL(createTableQuery)
+        db.execSQL(createTableStudentQuery)
+        val createTableCourseQuery = ("CREATE TABLE $TABLE_NAME_COURSE ("
+                + "$COLUMN_ID_COURSE INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$COLUMN_NAME_COURSE TEXT NOT NULL,"
+                + "$COLUMN_NAME_SCHOOL TEXT,"
+                + "$COLUMN_NAME_SHIFT TEXT,"
+                + "$COLUMN_NAME_ADDRESS TEXT,"
+                + "$COLUMN_NAME_USER_ID TEXT);")
+        db.execSQL(createTableCourseQuery)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -100,7 +117,8 @@ class DBHelper(context: Context?) :
                 val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
                 val telefono = cursor.getString(cursor.getColumnIndex(COLUMN_TELEFONO))
                 val nacionalidad = cursor.getString(cursor.getColumnIndex(COLUMN_NACIONALIDAD))
-                val fechaNacimiento = cursor.getString(cursor.getColumnIndex(COLUMN_FECHA_NACIMIENTO))
+                val fechaNacimiento =
+                    cursor.getString(cursor.getColumnIndex(COLUMN_FECHA_NACIMIENTO))
                 val dni = cursor.getString(cursor.getColumnIndex(COLUMN_DNI))
                 val email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL))
                 val estado = cursor.getString(cursor.getColumnIndex(COLUMN_ESTADO))
