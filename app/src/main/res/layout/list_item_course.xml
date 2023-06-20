@@ -1,31 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <TextView
-        android:id="@+id/edtNameCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/edtSchoolCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="16sp" />
-    <TextView
-        android:id="@+id/edtShiftCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="16sp" />
-    <TextView
-        android:id="@+id/edtAddressCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="16sp" />
-</LinearLayout>
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="16dp"
+    app:cardCornerRadius="16dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:padding="16dp"
+        style="@style/BalloonStyle">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtNameCourse"
+                android:text="Course: "
+                style="@style/BalloonStyleName"/>
+            <TextView
+                android:id="@+id/edtNameCourse"
+                style="@style/BalloonStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtSchoolCourse"
+                android:text="School: "
+                style="@style/BalloonStyleName"/>
+            <TextView
+                android:id="@+id/edtSchoolCourse"
+                android:layout_marginTop="4dp"
+                style="@style/BalloonStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtShiftCourse"
+                android:text="Shift: "
+                style="@style/BalloonStyleName"/>
+            <TextView
+                android:id="@+id/edtShiftCourse"
+                style="@style/BalloonStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtAddressCourse"
+                android:text="Address: "
+                style="@style/BalloonStyleName"/>
+            <TextView
+                android:id="@+id/edtAddressCourse"
+                android:layout_marginTop="4dp"
+                style="@style/BalloonStyle"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

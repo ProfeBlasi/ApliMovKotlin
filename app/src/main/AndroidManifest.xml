@@ -29,7 +29,7 @@
             android:name=".HiTeacher"
             android:exported="false" />
         <activity
-            android:name=".ui.alumnos.DetalleAlumnoActivity"
+            android:name=".ui.alumnos.HomeViewModel"
             android:exported="false" />
         <activity
             android:name=".Login.RememberPassword"

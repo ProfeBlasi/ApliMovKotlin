@@ -40,11 +40,11 @@ class CourseRepository(private val dbHelper: DBHelper) {
     }
 
     @SuppressLint("Range")
-    fun getAllCourses(): List<Course> {
+    fun getAllCourses(currentUserId: String): List<Course> {
         val courses = mutableListOf<Course>()
-        val db = dbHelper.readableDatabase
-        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_COURSE}"
-        val cursor = db.rawQuery(selectQuery, null)
+        val db = dbHelper.writableDatabase
+        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_COURSE} WHERE ${DBHelper.COLUMN_NAME_USER_ID} = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(currentUserId))
         if (cursor.moveToFirst()) {
             do {
                 val id = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_COURSE))
