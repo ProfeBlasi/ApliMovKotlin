@@ -8,10 +8,10 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.tpintegrador.R
 
-class AlumnosAdapter(
+class StudentAdapter(
     private val context: Context,
-    private val alumnosList: List<Alumno>
-) : ArrayAdapter<Alumno>(context, 0, alumnosList) {
+    private val alumnosList: List<Student>
+) : ArrayAdapter<Student>(context, 0, alumnosList) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var itemView = convertView
@@ -22,10 +22,10 @@ class AlumnosAdapter(
         val alumno = alumnosList[position]
 
         val textViewNombre = itemView?.findViewById<TextView>(R.id.textViewNombreAlumno)
-        textViewNombre?.text = "${alumno.apellido}, ${alumno.nombre}"
+        textViewNombre?.text = "${alumno.lastName}, ${alumno.name}"
 
         val textViewDni = itemView?.findViewById<TextView>(R.id.textViewDNI)
-        textViewDni?.text = alumno.dni
+        textViewDni?.text = alumno.document
 
         val textViewEmail = itemView?.findViewById<TextView>(R.id.textViewEmail)
         textViewEmail?.text = alumno.email

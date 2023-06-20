@@ -24,7 +24,8 @@ class HiTeacher : AppCompatActivity() {
         binding = ActivityHiTeacherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarHiTeacher.toolbar)
+        // Desactivar la barra de acción
+        supportActionBar?.hide()
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView

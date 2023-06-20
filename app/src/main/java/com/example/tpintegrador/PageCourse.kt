@@ -1,5 +1,7 @@
 package com.example.tpintegrador
 
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,7 @@ import com.example.tpintegrador.DataBase.Entities.CourseAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.tpintegrador.DataBase.Repository.CourseRepository
 import com.example.tpintegrador.Login.Login
+import com.google.firebase.auth.FirebaseAuth
 
 class PageCourse : AppCompatActivity() {
     private lateinit var fabAddCourse: FloatingActionButton
@@ -28,6 +31,11 @@ class PageCourse : AppCompatActivity() {
     private lateinit var btnCancelCreateCourse: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CourseAdapter
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    companion object{
+        var COURSE_ID = "COURSE_ID"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +51,12 @@ class PageCourse : AppCompatActivity() {
         btnCreateCourse = findViewById(R.id.btnCreateCourse)
         btnCancelCreateCourse = findViewById(R.id.btnCancelCreateCourse)
         recyclerView = findViewById(R.id.recyclerViewCourses)
+        firebaseAuth = FirebaseAuth.getInstance()
+
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         val userId: String = intent.extras?.getString(Login.USER_ID).orEmpty()
-        val courses = courseRepository.getAllCourses()
+        val courses = courseRepository.getAllCourses(userId)
         adapter = CourseAdapter(courses.toMutableList())
         recyclerView.adapter = adapter
 
@@ -54,6 +64,21 @@ class PageCourse : AppCompatActivity() {
             fabAddCourse.visibility = View.GONE
             layoutCreateCourse.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
+        }
+
+        fabAddCourse.setOnLongClickListener {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.confirm))
+                .setMessage(getString(R.string.logOutSession))
+                .setPositiveButton(getString(R.string.logOut)) { dialogInterface: DialogInterface, i: Int ->
+                    firebaseAuth.signOut()
+                    val intent = Intent(this, Login::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show()
+            true
         }
 
         btnCancelCreateCourse.setOnClickListener {
@@ -70,16 +95,35 @@ class PageCourse : AppCompatActivity() {
                 val course = Course(nameCourse, schoolCourse, shiftCourse, addressCourse, userId)
                 val courseId = courseRepository.insertCourse(course)
                 if (courseId == -1L) {
-                    Toast.makeText(this, getString(R.string.failedCourse), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, getString(R.string.failedCourse), Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this, getString(R.string.enterName), Toast.LENGTH_SHORT).show()
             }
 
-            val updatedCourses = courseRepository.getAllCourses()
+            val updatedCourses = courseRepository.getAllCourses(userId)
             adapter.updateCourses(updatedCourses)
             cleanAndHide()
+        }
+
+        adapter.setOnCourseLongClickListener { course ->
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.confirm))
+                .setMessage(getString(R.string.deleteCourse))
+                .setPositiveButton(getString(R.string.delete)) { _, _ ->
+                    courseRepository.deleteCourse(course.id)
+                    val updatedCourses = courseRepository.getAllCourses(userId)
+                    adapter.updateCourses(updatedCourses)
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show()
+        }
+
+        adapter.setOnCourseClickListener { course ->
+            COURSE_ID = course.id.toString()
+            val intent = Intent(this, HiTeacher::class.java)
+            intent.putExtra(Login.USER_ID, COURSE_ID)
+            startActivity(intent)
         }
     }
 

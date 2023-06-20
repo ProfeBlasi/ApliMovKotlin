@@ -7,8 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tpintegrador.R
 
-class CourseAdapter(
-    private val courses: MutableList<Course>) : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
+class CourseAdapter(private val courses: MutableList<Course>) :
+    RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
+
+    private var onLongClickListener: ((Course) -> Unit)? = null
+    private var onClickListener: ((Course) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -36,11 +39,29 @@ class CourseAdapter(
             txtCourseSchool.text = course.school
             txtCourseShift.text = course.shift
             txtCourseAddress.text = course.address
+
+            itemView.setOnLongClickListener {
+                onLongClickListener?.invoke(course)
+                true
+            }
+
+            itemView.setOnClickListener {
+                onClickListener?.invoke(course)
+            }
         }
     }
 
     fun updateCourses(updatedCourses: List<Course>) {
         courses.clear()
         courses.addAll(updatedCourses)
+        notifyDataSetChanged()
+    }
+
+    fun setOnCourseLongClickListener(listener: (Course) -> Unit) {
+        onLongClickListener = listener
+    }
+
+    fun setOnCourseClickListener(listener: (Course) -> Unit) {
+        onClickListener = listener
     }
 }
