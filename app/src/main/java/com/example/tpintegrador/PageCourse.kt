@@ -120,9 +120,9 @@ class PageCourse : AppCompatActivity() {
         }
 
         adapter.setOnCourseClickListener { course ->
-            COURSE_ID = course.id.toString()
-            val intent = Intent(this, HiTeacher::class.java)
-            intent.putExtra(Login.USER_ID, COURSE_ID)
+            val courseId = course.id.toString()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(COURSE_ID, courseId)
             startActivity(intent)
         }
     }

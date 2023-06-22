@@ -1,13 +1,10 @@
 package com.example.tpintegrador.DataBase
 
-import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.tpintegrador.DataBase.Entities.Student
 
-class DBHelper(context: Context?) :
+class DBHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
@@ -15,16 +12,16 @@ class DBHelper(context: Context?) :
         private const val DATABASE_NAME = "School.db"
         const val TABLE_NAME_STUDENT = "student"
         const val COLUMN_ID_STUDENT = "id"
-        const val COLUMN_LAST_NAME = "last name"
-        const val COLUMN_NAME = "name"
-        const val COLUMN_ADDRESS = "address"
-        const val COLUMN_PHONE = "phone"
-        const val COLUMN_NATIONALITY = "nationality"
-        const val COLUMN_BIRTHDATE = "birthdate"
-        const val COLUMN_DOCUMENT = "document"
-        const val COLUMN_EMAIL = "email"
-        const val COLUMN_STATE = "state"
-        const val COLUMN_COURSE_ID = "course_id"
+        const val COLUMN_LAST_NAME_STUDENT = "last_name"
+        const val COLUMN_NAME_STUDENT = "name_student"
+        const val COLUMN_ADDRESS_STUDENT = "address"
+        const val COLUMN_PHONE_STUDENT = "phone"
+        const val COLUMN_NATIONALITY_STUDENT = "nationality"
+        const val COLUMN_BIRTHDATE_STUDENT = "birthdate"
+        const val COLUMN_DOCUMENT_STUDENT = "document"
+        const val COLUMN_EMAIL_STUDENT = "email"
+        const val COLUMN_STATE_STUDENT = "state"
+        const val COLUMN_COURSE_ID_STUDENT = "course_id"
 
         const val TABLE_NAME_COURSE = "courses"
         const val COLUMN_ID_COURSE = "id"
@@ -38,16 +35,16 @@ class DBHelper(context: Context?) :
     override fun onCreate(db: SQLiteDatabase) {
         val createTableStudentQuery = ("CREATE TABLE $TABLE_NAME_STUDENT ("
                 + "$COLUMN_ID_STUDENT INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "$COLUMN_LAST_NAME TEXT NOT NULL,"
-                + "$COLUMN_NAME TEXT NOT NULL,"
-                + "$COLUMN_ADDRESS TEXT,"
-                + "$COLUMN_PHONE TEXT,"
-                + "$COLUMN_NATIONALITY TEXT,"
-                + "$COLUMN_BIRTHDATE TEXT,"
-                + "$COLUMN_DOCUMENT TEXT,"
-                + "$COLUMN_EMAIL TEXT,"
-                + "$COLUMN_STATE TEXT,"
-                + "$COLUMN_COURSE_ID TEXT);")
+                + "$COLUMN_LAST_NAME_STUDENT TEXT NOT NULL,"
+                + "$COLUMN_NAME_STUDENT TEXT NOT NULL,"
+                + "$COLUMN_ADDRESS_STUDENT TEXT,"
+                + "$COLUMN_PHONE_STUDENT TEXT,"
+                + "$COLUMN_NATIONALITY_STUDENT TEXT,"
+                + "$COLUMN_BIRTHDATE_STUDENT TEXT,"
+                + "$COLUMN_DOCUMENT_STUDENT TEXT,"
+                + "$COLUMN_EMAIL_STUDENT TEXT,"
+                + "$COLUMN_STATE_STUDENT TEXT,"
+                + "$COLUMN_COURSE_ID_STUDENT TEXT);")
         db.execSQL(createTableStudentQuery)
         val createTableCourseQuery = ("CREATE TABLE $TABLE_NAME_COURSE ("
                 + "$COLUMN_ID_COURSE INTEGER PRIMARY KEY AUTOINCREMENT,"
