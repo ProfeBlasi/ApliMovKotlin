@@ -6,35 +6,35 @@ import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.Student
 
 class StudentRepository(private val dbHelper: DBHelper) {
-    fun addStudent(student: Student): Long {
+    fun insertStudent(student: Student): Long {
         val db = dbHelper.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(DBHelper.COLUMN_LAST_NAME, student.lastName)
-        contentValues.put(DBHelper.COLUMN_NAME, student.name)
-        contentValues.put(DBHelper.COLUMN_ADDRESS, student.address)
-        contentValues.put(DBHelper.COLUMN_PHONE, student.phone)
-        contentValues.put(DBHelper.COLUMN_NATIONALITY, student.nationality)
-        contentValues.put(DBHelper.COLUMN_BIRTHDATE, student.birthdate)
-        contentValues.put(DBHelper.COLUMN_DOCUMENT, student.document)
-        contentValues.put(DBHelper.COLUMN_EMAIL, student.email)
-        contentValues.put(DBHelper.COLUMN_STATE, student.state)
-        contentValues.put(DBHelper.COLUMN_COURSE_ID, student.courseId)
+        contentValues.put(DBHelper.COLUMN_LAST_NAME_STUDENT, student.lastName)
+        contentValues.put(DBHelper.COLUMN_NAME_STUDENT, student.nameStudent)
+        contentValues.put(DBHelper.COLUMN_ADDRESS_STUDENT, student.address)
+        contentValues.put(DBHelper.COLUMN_PHONE_STUDENT, student.phone)
+        contentValues.put(DBHelper.COLUMN_NATIONALITY_STUDENT, student.nationality)
+        contentValues.put(DBHelper.COLUMN_BIRTHDATE_STUDENT, student.birthdate)
+        contentValues.put(DBHelper.COLUMN_DOCUMENT_STUDENT, student.document)
+        contentValues.put(DBHelper.COLUMN_EMAIL_STUDENT, student.email)
+        contentValues.put(DBHelper.COLUMN_STATE_STUDENT, student.state)
+        contentValues.put(DBHelper.COLUMN_COURSE_ID_STUDENT, student.courseId)
         return db.insert(DBHelper.TABLE_NAME_STUDENT, null, contentValues)
     }
 
     fun updateStudent(student: Student): Int {
         val db = dbHelper.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(DBHelper.COLUMN_LAST_NAME, student.lastName)
-        contentValues.put(DBHelper.COLUMN_NAME, student.name)
-        contentValues.put(DBHelper.COLUMN_ADDRESS, student.address)
-        contentValues.put(DBHelper.COLUMN_PHONE, student.phone)
-        contentValues.put(DBHelper.COLUMN_NATIONALITY, student.nationality)
-        contentValues.put(DBHelper.COLUMN_BIRTHDATE, student.birthdate)
-        contentValues.put(DBHelper.COLUMN_DOCUMENT, student.document)
-        contentValues.put(DBHelper.COLUMN_EMAIL, student.email)
-        contentValues.put(DBHelper.COLUMN_STATE, student.state)
-        contentValues.put(DBHelper.COLUMN_COURSE_ID, student.courseId)
+        contentValues.put(DBHelper.COLUMN_LAST_NAME_STUDENT, student.lastName)
+        contentValues.put(DBHelper.COLUMN_NAME_STUDENT, student.nameStudent)
+        contentValues.put(DBHelper.COLUMN_ADDRESS_STUDENT, student.address)
+        contentValues.put(DBHelper.COLUMN_PHONE_STUDENT, student.phone)
+        contentValues.put(DBHelper.COLUMN_NATIONALITY_STUDENT, student.nationality)
+        contentValues.put(DBHelper.COLUMN_BIRTHDATE_STUDENT, student.birthdate)
+        contentValues.put(DBHelper.COLUMN_DOCUMENT_STUDENT, student.document)
+        contentValues.put(DBHelper.COLUMN_EMAIL_STUDENT, student.email)
+        contentValues.put(DBHelper.COLUMN_STATE_STUDENT, student.state)
+        contentValues.put(DBHelper.COLUMN_COURSE_ID_STUDENT, student.courseId)
         return db.update(
             DBHelper.TABLE_NAME_STUDENT, contentValues, "${DBHelper.COLUMN_ID_STUDENT} = ?",
             arrayOf(student.id.toString())
@@ -47,24 +47,24 @@ class StudentRepository(private val dbHelper: DBHelper) {
     }
 
     @SuppressLint("Range")
-    fun getAllStudents(): List<Student> {
+    fun getAllStudents(currentCourseId: String): List<Student> {
         val students = mutableListOf<Student>()
         val db = dbHelper.readableDatabase
-        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_STUDENT}"
-        val cursor = db.rawQuery(selectQuery, null)
+        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_STUDENT} WHERE ${DBHelper.COLUMN_COURSE_ID_STUDENT} = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(currentCourseId))
         if (cursor.moveToFirst()) {
             do {
                 val id = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_STUDENT))
-                val lastName = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_LAST_NAME))
-                val name = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME))
-                val address = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ADDRESS))
-                val phone = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_PHONE))
-                val nationality = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NATIONALITY))
-                val birthdate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_BIRTHDATE))
-                val document = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DOCUMENT))
-                val email = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EMAIL))
-                val state = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_STATE))
-                val courseId = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_ID))
+                val lastName = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_LAST_NAME_STUDENT))
+                val name = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME_STUDENT))
+                val address = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ADDRESS_STUDENT))
+                val phone = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_PHONE_STUDENT))
+                val nationality = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NATIONALITY_STUDENT))
+                val birthdate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_BIRTHDATE_STUDENT))
+                val document = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DOCUMENT_STUDENT))
+                val email = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EMAIL_STUDENT))
+                val state = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_STATE_STUDENT))
+                val courseId = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_ID_STUDENT))
 
                 val student = Student(
                     id,

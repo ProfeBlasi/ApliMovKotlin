@@ -6,30 +6,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tpintegrador.R
 
-class StudentAdapter(
-    private val context: Context,
-    private val alumnosList: List<Student>
-) : ArrayAdapter<Student>(context, 0, alumnosList) {
+class StudentAdapter(private val studentList: MutableList<Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var itemView = convertView
-        if (itemView == null) {
-            itemView = LayoutInflater.from(context).inflate(R.layout.alumno_item, parent, false)
+    inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val txtLastName: TextView = itemView.findViewById(R.id.edtLastNameStudent)
+        private val txtName: TextView = itemView.findViewById(R.id.edtNameStudent)
+
+        fun bind(student: Student) {
+            txtLastName.text = student.lastName
+            txtName.text = student.nameStudent
         }
+    }
 
-        val alumno = alumnosList[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_student, parent, false)
+        return StudentViewHolder(itemView)
+    }
 
-        val textViewNombre = itemView?.findViewById<TextView>(R.id.textViewNombreAlumno)
-        textViewNombre?.text = "${alumno.lastName}, ${alumno.name}"
+    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
+        val student = studentList[position]
+        holder.bind(student)
+    }
 
-        val textViewDni = itemView?.findViewById<TextView>(R.id.textViewDNI)
-        textViewDni?.text = alumno.document
+    override fun getItemCount(): Int {
+        return studentList.size
+    }
 
-        val textViewEmail = itemView?.findViewById<TextView>(R.id.textViewEmail)
-        textViewEmail?.text = alumno.email
-
-        return itemView!!
+    fun updateStudent(updatedStudents: List<Student>) {
+        studentList.clear()
+        studentList.addAll(updatedStudents)
+        notifyDataSetChanged()
     }
 }
