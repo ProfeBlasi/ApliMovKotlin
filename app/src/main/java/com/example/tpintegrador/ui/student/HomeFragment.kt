@@ -1,5 +1,6 @@
 package com.example.tpintegrador.ui.student
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,13 +30,15 @@ class HomeFragment : Fragment() {
     private lateinit var fabAddStudent: FloatingActionButton
     private lateinit var layoutCreateStudent: ConstraintLayout
     private lateinit var recyclerViewStudent: RecyclerView
-
+    private lateinit var studentsMap: HashMap<Long, Student>
+    private var selectedStudent: Student? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        Log.d("Container", container.toString())
         val root: View = binding.root
         fabAddStudent = binding.fabAddStudent
         layoutCreateStudent = binding.layoutCreateStudent
@@ -47,7 +50,10 @@ class HomeFragment : Fragment() {
         val courseId: String? = arguments?.getString(COURSE_ID)
         dbHelper = DBHelper(requireContext().applicationContext)
         val studentRepository = StudentRepository(dbHelper)
-
+        studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) } ?: HashMap()
+        studentAdapter = studentsMap?.let { StudentAdapter(it) }!!
+        recyclerViewStudent.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewStudent.adapter = studentAdapter
         fabAddStudent.setOnClickListener {
             fabAddStudent.visibility = View.GONE
             layoutCreateStudent.visibility = View.VISIBLE
@@ -77,16 +83,17 @@ class HomeFragment : Fragment() {
             }
             clearInputFields()
             showStudentList()
-            val studentList = courseId?.let { it1 -> studentRepository.getAllStudents(it1) }
-            if (studentList != null) {
-                studentAdapter.updateStudent(studentList)
-            }
+            studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) } ?: HashMap()
+            studentAdapter = studentsMap?.let { StudentAdapter(it) }!!
+            recyclerViewStudent.adapter = studentAdapter
         }
 
-        val studentList = courseId?.let { studentRepository.getAllStudents(it)?.toMutableList() } ?: mutableListOf()
-        studentAdapter = StudentAdapter(studentList)
-        recyclerViewStudent.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewStudent.adapter = studentAdapter
+        studentAdapter.setOnItemClickListener { student ->
+            selectedStudent = student
+            val intent = Intent(requireContext(), HomeViewModel::class.java)
+            intent.putExtra("EXTRA_STUDENT", selectedStudent)
+            startActivity(intent)
+        }
 
         return root
     }
@@ -99,6 +106,7 @@ class HomeFragment : Fragment() {
         layoutCreateStudent.visibility = View.GONE
         recyclerViewStudent.visibility = View.VISIBLE
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

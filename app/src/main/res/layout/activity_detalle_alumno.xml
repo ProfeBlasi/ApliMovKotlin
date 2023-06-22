@@ -13,15 +13,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewApellido"
+            android:id="@+id/txtLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apellido: "
+            android:text="@string/lastname"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextApellido"
+            android:id="@+id/edtLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
@@ -34,15 +34,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewNombre"
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre: "
+            android:text="@string/name"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextNombre"
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
@@ -55,15 +55,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewTelefono"
+            android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Telefono: "
+            android:text="@string/address"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextTelefono"
+            android:id="@+id/edtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
@@ -76,15 +76,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewNacionalidad"
+            android:id="@+id/txtPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nacionalidad: "
+            android:text="@string/phone"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextNacionalidad"
+            android:id="@+id/edtPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
@@ -97,15 +97,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewFechaNacimiento"
+            android:id="@+id/txtNationality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha de nacimiento: "
+            android:text="@string/nationality"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextFechaNacimiento"
+            android:id="@+id/edtNationality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
@@ -118,18 +118,18 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewDNI"
+            android:id="@+id/txtBirthDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dni: "
+            android:text="@string/birthdate"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextDNI"
+            android:id="@+id/edtBirthdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
@@ -139,36 +139,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/txtDocument"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E-mail: "
-            android:textStyle="bold"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textViewEstado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Estado"
+            android:text="@string/document"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextEstado"
+            android:id="@+id/edtDocument"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp" />
@@ -181,15 +160,36 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewPromedio"
+            android:id="@+id/txtEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Promedio: "
+            android:text="@string/e_mail"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edtEmailStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/state"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/editTextPromedio"
+            android:id="@+id/edtState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp" />
@@ -203,17 +203,24 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/buttonEditar"
+            android:id="@+id/btnReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar"
+            android:text="@string/return_student"
             android:layout_marginEnd="10dp" />
 
         <Button
-            android:id="@+id/buttonBorrar"
+            android:id="@+id/btnUpdateStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Borrar"
+            android:text="@string/update"
+            android:layout_marginEnd="10dp" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
             android:layout_marginStart="10dp" />
 
     </LinearLayout>

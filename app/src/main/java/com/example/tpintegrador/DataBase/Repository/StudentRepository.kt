@@ -47,8 +47,8 @@ class StudentRepository(private val dbHelper: DBHelper) {
     }
 
     @SuppressLint("Range")
-    fun getAllStudents(currentCourseId: String): List<Student> {
-        val students = mutableListOf<Student>()
+    fun getAllStudentsMap(currentCourseId: String): HashMap<Long, Student> {
+        val studentsMap = HashMap<Long, Student>()
         val db = dbHelper.readableDatabase
         val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_STUDENT} WHERE ${DBHelper.COLUMN_COURSE_ID_STUDENT} = ?"
         val cursor = db.rawQuery(selectQuery, arrayOf(currentCourseId))
@@ -79,10 +79,11 @@ class StudentRepository(private val dbHelper: DBHelper) {
                     state,
                     courseId
                 )
-                students.add(student)
+                studentsMap[id] = student
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return students
+        return studentsMap
     }
+
 }
