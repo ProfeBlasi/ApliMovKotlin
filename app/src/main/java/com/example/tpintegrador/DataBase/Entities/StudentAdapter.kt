@@ -9,12 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tpintegrador.R
 
-class StudentAdapter(private val studentList: MutableList<Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
-
+class StudentAdapter(private val studentsMap: HashMap<Long, Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+    private var itemClickListener: ((Student) -> Unit)? = null
     inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtLastName: TextView = itemView.findViewById(R.id.edtLastNameStudent)
         private val txtName: TextView = itemView.findViewById(R.id.edtNameStudent)
-
         fun bind(student: Student) {
             txtLastName.text = student.lastName
             txtName.text = student.nameStudent
@@ -27,17 +26,23 @@ class StudentAdapter(private val studentList: MutableList<Student>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        val student = studentList[position]
+        val student = studentsMap.values.elementAt(position)
         holder.bind(student)
+        holder.itemView.setOnClickListener {
+            itemClickListener?.invoke(student)
+        }
     }
 
     override fun getItemCount(): Int {
-        return studentList.size
+        return studentsMap.size
     }
 
-    fun updateStudent(updatedStudents: List<Student>) {
-        studentList.clear()
-        studentList.addAll(updatedStudents)
+    fun setOnItemClickListener(listener: (Student) -> Unit) {
+        itemClickListener = listener
+    }
+    fun updateStudents(updatedStudents: HashMap<Long, Student>) {
+        studentsMap.clear()
+        studentsMap.putAll(updatedStudents)
         notifyDataSetChanged()
     }
 }

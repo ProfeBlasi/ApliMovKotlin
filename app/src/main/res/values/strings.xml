@@ -5,6 +5,7 @@
     //Text of Button
     <string name="confirm">Confirm</string>
     <string name="deleteCourse">Are you sure you want to delete this course?</string>
+    <string name="deleteStudent">Are you sure you want to delete this student?</string>
     <string name="logOutSession">You want to close the session</string>
     <string name="delete">Delete</string>
     <string name="logOut">Log out</string>
@@ -58,4 +59,15 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="lastname_of_student">LastName of student</string>
     <string name="name_of_student">Name of student</string>
+    <string name="lastname">LastName:</string>
+    <string name="name">Name:</string>
+    <string name="address">Address:</string>
+    <string name="phone">Phone:</string>
+    <string name="nationality">Nationality:</string>
+    <string name="birthdate">Birthdate:</string>
+    <string name="document">Document:</string>
+    <string name="e_mail">E-mail:</string>
+    <string name="state">State:</string>
+    <string name="update">Update</string>
+    <string name="return_student">Return</string>
 </resources>
