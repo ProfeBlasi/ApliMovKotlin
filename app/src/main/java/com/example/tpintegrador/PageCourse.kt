@@ -52,13 +52,14 @@ class PageCourse : AppCompatActivity() {
         btnCancelCreateCourse = findViewById(R.id.btnCancelCreateCourse)
         recyclerView = findViewById(R.id.recyclerViewCourses)
         firebaseAuth = FirebaseAuth.getInstance()
-
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         val userId: String = intent.extras?.getString(Login.USER_ID).orEmpty()
         val courses = courseRepository.getAllCourses(userId)
         adapter = CourseAdapter(courses.toMutableList())
         recyclerView.adapter = adapter
+        val updatedCourses = courseRepository.getAllCourses(userId)
+        adapter.updateCourses(updatedCourses)
 
         fabAddCourse.setOnClickListener {
             fabAddCourse.visibility = View.GONE
@@ -135,5 +136,8 @@ class PageCourse : AppCompatActivity() {
         fabAddCourse.visibility = View.VISIBLE
         layoutCreateCourse.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
+    }
+    override fun onBackPressed() {
+        Toast.makeText(this, getString(R.string.you_are_already_logged), Toast.LENGTH_SHORT).show()
     }
 }

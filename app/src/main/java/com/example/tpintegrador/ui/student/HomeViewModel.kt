@@ -2,19 +2,22 @@ package com.example.tpintegrador.ui.student
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.Student
-import com.example.tpintegrador.DataBase.Repository.CourseRepository
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
 import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.PageCourse
 import com.example.tpintegrador.R
+import android.Manifest
+import android.provider.MediaStore
 
 class HomeViewModel : AppCompatActivity() {
     private lateinit var txtLastName: TextView
@@ -38,8 +41,13 @@ class HomeViewModel : AppCompatActivity() {
     private lateinit var btnUpdateStudent: Button
     private lateinit var btnDelete: Button
     private lateinit var btnReturn: Button
+    private lateinit var btnCam: Button
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private lateinit var imgPhoto: ImageView
     private lateinit var studentRepository: StudentRepository
     private lateinit var student: Student
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +76,8 @@ class HomeViewModel : AppCompatActivity() {
         btnUpdateStudent = findViewById(R.id.btnUpdateStudent)
         btnDelete = findViewById(R.id.btnDelete)
         btnReturn = findViewById(R.id.btnReturn)
+        btnCam = findViewById(R.id.btnCam)
+        imgPhoto = findViewById(R.id.imgPhoto)
         student = intent.getParcelableExtra("EXTRA_STUDENT")!!
 
         if (student != null) {
@@ -103,10 +113,23 @@ class HomeViewModel : AppCompatActivity() {
             student?.let { showDialogConfirmationDelete(it) }
         }
 
+        btnCam.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+
         btnReturn.setOnClickListener{
             returnStudent()
         }
     }
+
+    private fun dispatchTakePictureIntent() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            openCamera()
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+        }
+    }
+
 
     private fun showStudentDetails(student: Student?) {
         edtLastName.setText(student?.lastName)
@@ -136,5 +159,34 @@ class HomeViewModel : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(PageCourse.COURSE_ID, student?.courseId)
         startActivity(intent)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                Toast.makeText(this, "Permiso de cámara denegado.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } else {
+            Toast.makeText(this, "No se encontró ninguna aplicación de cámara.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val extras = data?.extras
+            val imageBitmap = extras?.get("data") as Bitmap
+            imgPhoto.setImageBitmap(imageBitmap)
+        }
     }
 }

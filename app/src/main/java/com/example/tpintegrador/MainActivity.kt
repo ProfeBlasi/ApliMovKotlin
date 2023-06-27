@@ -1,5 +1,6 @@
 package com.example.tpintegrador
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,23 +17,19 @@ import com.example.tpintegrador.PageCourse.Companion.COURSE_ID
 import com.example.tpintegrador.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var courseId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        courseId = intent.extras?.getString(COURSE_ID).orEmpty()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        val courseId: String = intent.extras?.getString(PageCourse.COURSE_ID).orEmpty()
-        val bundle = bundleOf(COURSE_ID to courseId)
-        navController.navigate(R.id.nav_home, bundle)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
@@ -40,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun getCourseId(): String {
+        return courseId
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,5 +52,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, PageCourse::class.java)
+        startActivity(intent)
     }
 }

@@ -10,7 +10,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:padding="16dp"
-        style="@style/BalloonStyle">
+        style="@style/BalloonStyleCourse">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,10 +18,10 @@
             <TextView
                 android:id="@+id/txtNameCourse"
                 android:text="Course: "
-                style="@style/BalloonStyleName"/>
+                style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtNameCourse"
-                style="@style/BalloonStyle"/>
+                style="@style/BalloonStyleCourse"/>
         </LinearLayout>
 
         <LinearLayout
@@ -31,11 +31,11 @@
             <TextView
                 android:id="@+id/txtSchoolCourse"
                 android:text="School: "
-                style="@style/BalloonStyleName"/>
+                style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtSchoolCourse"
                 android:layout_marginTop="4dp"
-                style="@style/BalloonStyle"/>
+                style="@style/BalloonStyleCourse"/>
         </LinearLayout>
 
         <LinearLayout
@@ -45,10 +45,10 @@
             <TextView
                 android:id="@+id/txtShiftCourse"
                 android:text="Shift: "
-                style="@style/BalloonStyleName"/>
+                style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtShiftCourse"
-                style="@style/BalloonStyle"/>
+                style="@style/BalloonStyleCourse"/>
         </LinearLayout>
 
         <LinearLayout
@@ -58,11 +58,11 @@
             <TextView
                 android:id="@+id/txtAddressCourse"
                 android:text="Address: "
-                style="@style/BalloonStyleName"/>
+                style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtAddressCourse"
                 android:layout_marginTop="4dp"
-                style="@style/BalloonStyle"/>
+                style="@style/BalloonStyleCourse"/>
         </LinearLayout>
 
 
