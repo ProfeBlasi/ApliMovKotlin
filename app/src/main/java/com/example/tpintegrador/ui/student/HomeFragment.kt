@@ -16,6 +16,8 @@ import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.Student
 import com.example.tpintegrador.DataBase.Entities.StudentAdapter
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
+import com.example.tpintegrador.MainActivity
+import com.example.tpintegrador.PageCourse
 import com.example.tpintegrador.PageCourse.Companion.COURSE_ID
 import com.example.tpintegrador.databinding.FragmentHomeBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,7 +40,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        Log.d("Container", container.toString())
         val root: View = binding.root
         fabAddStudent = binding.fabAddStudent
         layoutCreateStudent = binding.layoutCreateStudent
@@ -47,7 +48,8 @@ class HomeFragment : Fragment() {
         val btnCreateStudent = binding.btnCreateStudent
         val btnCancelCreateStudent = binding.btnCancelCreateStudent
         recyclerViewStudent = binding.recyclerViewStudent
-        val courseId: String? = arguments?.getString(COURSE_ID)
+        val mainActivity = requireActivity() as MainActivity
+        val courseId = mainActivity.getCourseId()
         dbHelper = DBHelper(requireContext().applicationContext)
         val studentRepository = StudentRepository(dbHelper)
         studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) } ?: HashMap()

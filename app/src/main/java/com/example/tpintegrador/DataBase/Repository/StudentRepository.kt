@@ -6,6 +6,7 @@ import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.Student
 
 class StudentRepository(private val dbHelper: DBHelper) {
+
     fun insertStudent(student: Student): Long {
         val db = dbHelper.writableDatabase
         val contentValues = ContentValues()
@@ -86,4 +87,43 @@ class StudentRepository(private val dbHelper: DBHelper) {
         return studentsMap
     }
 
+    @SuppressLint("Range")
+    fun getStudentById(studentId: Long): Student? {
+        val db = dbHelper.readableDatabase
+        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_STUDENT} WHERE ${DBHelper.COLUMN_ID_STUDENT} = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(studentId.toString()))
+
+        if (cursor.moveToFirst()) {
+            val lastName = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_LAST_NAME_STUDENT))
+            val name = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME_STUDENT))
+            val address = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ADDRESS_STUDENT))
+            val phone = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_PHONE_STUDENT))
+            val nationality = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NATIONALITY_STUDENT))
+            val birthdate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_BIRTHDATE_STUDENT))
+            val document = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DOCUMENT_STUDENT))
+            val email = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EMAIL_STUDENT))
+            val state = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_STATE_STUDENT))
+            val courseId = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_ID_STUDENT))
+
+            val student = Student(
+                studentId,
+                lastName,
+                name,
+                address,
+                phone,
+                nationality,
+                birthdate,
+                document,
+                email,
+                state,
+                courseId
+            )
+
+            cursor.close()
+            return student
+        }
+
+        cursor.close()
+        return null
+    }
 }

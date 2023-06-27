@@ -7,6 +7,28 @@
     android:padding="16dp"
     tools:context=".ui.student.HomeViewModel">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgPhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/random_photo_student"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/circle_shape"
+            android:layout_gravity="center_horizontal"/>
+
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,21 +229,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/return_student"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="5dp" />
 
         <Button
             android:id="@+id/btnUpdateStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="5dp" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete"
-            android:layout_marginStart="10dp" />
+            android:layout_marginStart="5dp" />
+
+        <Button
+            android:id="@+id/btnCam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cam"
+            android:layout_marginStart="5dp" />
 
     </LinearLayout>
 
