@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.tpintegrador.PageCourse
+import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -33,7 +33,7 @@ class Login : AppCompatActivity() {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                val intent = Intent(this, PageCourse::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(USER_ID, user.uid)
                 startActivity(intent)
             }
@@ -67,7 +67,7 @@ class Login : AppCompatActivity() {
             .addOnCompleteListener(this){ task ->
                 if(task.isSuccessful){
                     val user = firebaseAuth.currentUser
-                    val intent = Intent(this, PageCourse::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(USER_ID, user?.uid.toString())
                     startActivity(intent)
                 }else{
