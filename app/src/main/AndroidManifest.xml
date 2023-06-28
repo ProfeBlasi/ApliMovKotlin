@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -36,12 +37,10 @@
             android:name=".Login.RememberPassword"
             android:exported="false" />
         <activity
-            android:name="com.example.tpintegrador.ui.student.HomeViewModel" />
+            android:name="com.example.tpintegrador.ui.student.HomeViewModel"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Login.CreateAccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PageCourse"
             android:exported="false" />
     </application>
 

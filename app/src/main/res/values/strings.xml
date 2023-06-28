@@ -44,9 +44,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">My students</string>
+    <string name="menu_home">Courses</string>
     <string name="menu_gallery">Take attendance</string>
-    <string name="menu_slideshow">Qualification</string>
+    <string name="menu_slideshow">My Students</string>
     <string name="title_activity_page_course">New school</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -75,4 +75,5 @@
     <string name="photo">Photo</string>
     <string name="select_photo">Cam</string>
     <string name="cam">Cam</string>
+    <string name="courses">Courses</string>
 </resources>
