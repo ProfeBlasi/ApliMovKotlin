@@ -16,7 +16,7 @@ class RememberPassword : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remember_password)
-        val edtMail : TextView = findViewById(R.id.edtEmailRemembarPass)
+        val edtMail : TextView = findViewById(R.id.edtEmailRememberPass)
         val btnChanged : Button = findViewById(R.id.btnRemembarPass)
         btnChanged.setOnClickListener(){
             sendPasswordReset(edtMail.text.toString())

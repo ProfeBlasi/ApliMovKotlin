@@ -34,7 +34,6 @@
                 style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtSchoolCourse"
-                android:layout_marginTop="4dp"
                 style="@style/BalloonStyleCourse"/>
         </LinearLayout>
 
@@ -61,12 +60,7 @@
                 style="@style/BalloonStyleNameCourse"/>
             <TextView
                 android:id="@+id/edtAddressCourse"
-                android:layout_marginTop="4dp"
                 style="@style/BalloonStyleCourse"/>
         </LinearLayout>
-
-
-
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

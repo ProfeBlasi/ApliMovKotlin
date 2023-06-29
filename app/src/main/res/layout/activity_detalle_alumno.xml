@@ -5,27 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@drawable/activity_detail_student"
     tools:context=".ui.student.HomeViewModel">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/imgPhoto"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/random_photo_student"
+            android:background="@drawable/circle_shape"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/circle_shape"
-            android:layout_gravity="center_horizontal"/>
-
 
     </FrameLayout>
 
@@ -40,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/lastname"
             android:textStyle="bold"
+            android:ems="6"
             android:textSize="16sp"/>
 
         <EditText
@@ -60,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"
+            android:ems="6"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
@@ -80,6 +78,7 @@
             android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/address"
             android:textStyle="bold"
             android:textSize="16sp"/>
@@ -101,6 +100,7 @@
             android:id="@+id/txtPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/phone"
             android:textStyle="bold"
             android:textSize="16sp"/>
@@ -122,6 +122,7 @@
             android:id="@+id/txtNationality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/nationality"
             android:textStyle="bold"
             android:textSize="16sp"/>
@@ -143,6 +144,7 @@
             android:id="@+id/txtBirthDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/birthdate"
             android:textStyle="bold"
             android:textSize="16sp"/>
@@ -164,6 +166,7 @@
             android:id="@+id/txtDocument"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/document"
             android:textStyle="bold"
             android:textSize="16sp"/>
@@ -185,6 +188,7 @@
             android:id="@+id/txtEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/e_mail"
             android:textStyle="bold"
             android:textSize="16sp" />
@@ -206,6 +210,7 @@
             android:id="@+id/txtState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:text="@string/state"
             android:textStyle="bold"
             android:textSize="16sp"/>

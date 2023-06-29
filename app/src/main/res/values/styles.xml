@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:ems">8</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">30sp</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintHorizontal_bias">0.5</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
     <style name="BalloonStyleNameCourse">
         <item name="android:textSize">20sp</item>
         <item name="android:background">#FFFFFF</item>
