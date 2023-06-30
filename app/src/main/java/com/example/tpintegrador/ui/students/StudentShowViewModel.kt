@@ -1,4 +1,4 @@
-package com.example.tpintegrador.ui.calificacion
+package com.example.tpintegrador.ui.students
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -18,7 +18,7 @@ import com.example.tpintegrador.DataBase.Repository.StudentRepository
 import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.R
 
-class SlideshowViewModel : AppCompatActivity() {
+class StudentShowViewModel : AppCompatActivity() {
     private lateinit var txtLastName: TextView
     private lateinit var txtName: TextView
     private lateinit var txtPhone: TextView

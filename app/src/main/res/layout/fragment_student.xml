@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.student.HomeFragment"
-    android:id="@+id/homeFragmentId">
+    android:background="@drawable/activity_student"
+    tools:context=".ui.students.StudentFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddCourse"
+        android:id="@+id/fabAddStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/classroom"
+        android:src="@drawable/students"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCreateCourse"
+        android:id="@+id/layoutCreateStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,40 +36,22 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/edtNameCourse"
-            android:layout_width="0dp"
+            android:id="@+id/edtLastNameStudent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtNameCourse"
+            android:hint="@string/lastname_of_student"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edtSchoolCourse"
-            android:layout_width="0dp"
+            android:id="@+id/edtNameStudent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtSchoolCourse"
+            android:hint="@string/name_of_student"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtNameCourse" />
-
-        <EditText
-            android:id="@+id/edtShiftCourse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/edtShiftCourse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtSchoolCourse" />
-
-        <EditText
-            android:id="@+id/edtAddressCourse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/edtAddressCourse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtShiftCourse" />
+            app:layout_constraintTop_toBottomOf="@+id/edtLastNameStudent" />
 
         <LinearLayout
             android:id="@+id/layoutButtons"
@@ -78,12 +60,12 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/edtAddressCourse"
+            app:layout_constraintTop_toBottomOf="@+id/edtNameStudent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/btnCreateCourse"
+                android:id="@+id/btnCreateStudent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,31 +73,21 @@
                 android:layout_marginEnd="8dp" />
 
             <Button
-                android:id="@+id/btnCancelCreateCourse"
+                android:id="@+id/btnCancelCreateStudent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btnCancel"
                 android:layout_marginStart="8dp" />
-
-            <Button
-                android:id="@+id/btnGeolocation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="My location"
-                android:layout_marginStart="8dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCourses"
+        android:id="@+id/recyclerViewStudent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutCreateCourse"
+        app:layout_constraintTop_toBottomOf="@id/layoutCreateStudent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

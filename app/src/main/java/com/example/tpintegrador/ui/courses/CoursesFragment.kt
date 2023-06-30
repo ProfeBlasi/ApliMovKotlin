@@ -1,4 +1,4 @@
-package com.example.tpintegrador.ui.student
+package com.example.tpintegrador.ui.courses
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -32,8 +32,10 @@ import com.example.tpintegrador.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import android.Manifest
+import android.content.SharedPreferences
+import android.widget.TextView
 
-class HomeFragment : Fragment() {
+class CoursesFragment : Fragment() {
     private lateinit var fabAddCourse: FloatingActionButton
     private lateinit var layoutCreateCourse: ConstraintLayout
     private lateinit var edtNameCourse: EditText
@@ -47,9 +49,12 @@ class HomeFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var btnGeolocation: Button
     private lateinit var geocoder: Geocoder
+    private lateinit var coursesSelected: TextView
+    private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
-        var COURSE_ID = "COURSE_ID"
+        var COURSE_ID = "course_id"
+        var NAME_COURSE = "name_course"
     }
 
     @SuppressLint("MissingInflatedId")
@@ -58,7 +63,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_courses, container, false)
 
         val dbHelper = DBHelper(requireContext())
         val courseRepository = CourseRepository(dbHelper)
@@ -71,10 +76,12 @@ class HomeFragment : Fragment() {
         btnCreateCourse = root.findViewById(R.id.btnCreateCourse)
         btnCancelCreateCourse = root.findViewById(R.id.btnCancelCreateCourse)
         recyclerView = root.findViewById(R.id.recyclerViewCourses)
+        coursesSelected = root.findViewById(R.id.coursesSelected)
         firebaseAuth = FirebaseAuth.getInstance()
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        val userId: String = requireActivity().intent.extras?.getString(Login.USER_ID).orEmpty()
+        val mainActivity = requireActivity() as MainActivity
+        val userId: String = mainActivity.getUserId()
         val courses = courseRepository.getAllCourses(userId)
         adapter = CourseAdapter(courses.toMutableList())
         recyclerView.adapter = adapter
@@ -82,6 +89,7 @@ class HomeFragment : Fragment() {
         adapter.updateCourses(updatedCourses)
         geocoder = Geocoder(requireContext())
         btnGeolocation = root.findViewById(R.id.btnGeolocation)
+        sharedPreferences = requireContext().getSharedPreferences(Login.PREFERENCES, Context.MODE_PRIVATE)
 
         fabAddCourse.setOnClickListener {
             fabAddCourse.visibility = View.GONE
@@ -167,10 +175,12 @@ class HomeFragment : Fragment() {
         }
 
         adapter.setOnCourseClickListener { course ->
-            val courseId = course.id.toString()
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra(COURSE_ID, courseId)
-            startActivity(intent)
+            Toast.makeText(requireContext().applicationContext, "Seleccionaste el curso " + course.id, Toast.LENGTH_SHORT).show()
+            coursesSelected.text = "Selected course " + course.name + " of " + course.school
+            val editor = sharedPreferences.edit()
+            editor.putString(COURSE_ID, course.id.toString())
+            editor.putString(NAME_COURSE, course.name + " of " + course.school)
+            editor.apply()
         }
 
         return root

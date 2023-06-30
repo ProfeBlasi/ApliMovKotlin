@@ -1,4 +1,4 @@
-package com.example.tpintegrador.ui.asistencia
+package com.example.tpintegrador.ui.attendance
 
 data class StudentDto(
     var id: Long,

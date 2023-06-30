@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.asistencia.GalleryFragment">
+    android:background="@drawable/activity_attendance"
+    tools:context=".ui.attendance.AttendanceFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

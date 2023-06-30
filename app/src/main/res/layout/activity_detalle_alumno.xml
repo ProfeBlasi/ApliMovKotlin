@@ -3,25 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/activity_detail_student"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/activity_detail_student"
-    tools:context=".ui.student.HomeViewModel">
+    android:alpha="0.8"
+    tools:context=".ui.courses.CoursesViewModel">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="none"
+        android:accessibilityTraversalAfter="@id/imgPhoto"
+        android:fadeScrollbars="false"
         android:gravity="center"
-        android:padding="5dp">
+        android:padding="7dp"
+        >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imgPhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/random_photo_student"
-            android:background="@drawable/circle_shape"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/random_photo_student"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
     </FrameLayout>
 
@@ -34,16 +39,16 @@
             android:id="@+id/txtLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lastname"
-            android:textStyle="bold"
             android:ems="6"
-            android:textSize="16sp"/>
+            android:text="@string/lastname"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -56,16 +61,16 @@
             android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name"
             android:ems="6"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:text="@string/name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -80,14 +85,14 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/address"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -102,14 +107,14 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/phone"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -124,14 +129,14 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/nationality"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtNationality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -146,14 +151,14 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/birthdate"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtBirthdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -168,8 +173,8 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/document"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtDocument"
@@ -190,8 +195,8 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/e_mail"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtEmailStudent"
@@ -212,8 +217,8 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="@string/state"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtState"
@@ -226,36 +231,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/return_student"
-            android:layout_marginEnd="5dp" />
+            android:layout_marginEnd="5dp"
+            android:text="@string/return_student" />
 
         <Button
             android:id="@+id/btnUpdateStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update"
-            android:layout_marginEnd="5dp" />
+            android:layout_marginEnd="5dp"
+            android:text="@string/update" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"
+            android:text="@string/delete" />
 
         <Button
             android:id="@+id/btnCam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cam"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"
+            android:text="@string/cam" />
 
     </LinearLayout>
 
