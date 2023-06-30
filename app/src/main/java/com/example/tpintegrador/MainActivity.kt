@@ -1,5 +1,7 @@
 package com.example.tpintegrador
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
@@ -10,19 +12,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tpintegrador.Login.Login.Companion.USER_ID
+import com.example.tpintegrador.Login.Login
+import com.example.tpintegrador.Login.Login.Companion.PREFERENCES
 import com.example.tpintegrador.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var courseId: String
+    private lateinit var context: Context
+    private lateinit var sharedPreferences: SharedPreferences
+    private var courseId: String = "-1"
     private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        courseId = "1"// intent.extras?.getString(COURSE_ID).orEmpty()
-        userId = intent.extras?.getString(USER_ID).toString()
+        context = applicationContext
+        sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+        userId = sharedPreferences.getString(Login.USER_ID, null).toString()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -42,8 +48,11 @@ class MainActivity : AppCompatActivity() {
         return courseId
     }
 
+    fun getUserId(): String {
+        return userId
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }

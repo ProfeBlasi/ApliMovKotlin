@@ -37,7 +37,7 @@
             android:name=".Login.RememberPassword"
             android:exported="false" />
         <activity
-            android:name="com.example.tpintegrador.ui.student.HomeViewModel"
+            android:name="com.example.tpintegrador.ui.courses.CoursesViewModel"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".Login.CreateAccountActivity"

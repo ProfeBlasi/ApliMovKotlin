@@ -1,7 +1,9 @@
 package com.example.tpintegrador.Login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -16,8 +18,11 @@ import com.google.firebase.ktx.Firebase
 class Login : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
+    private lateinit var context: Context
+    private lateinit var sharedPreferences: SharedPreferences
     companion object{
-        const val USER_ID = "USER_ID"
+        const val PREFERENCES = "preferences"
+        const val USER_ID = "user_id"
     }
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +33,19 @@ class Login : AppCompatActivity() {
         val edtPassword : TextView = findViewById(R.id.edtPassword)
         val btnCreateAccount : TextView = findViewById(R.id.btnCreateAccount)
         val btnForgotMyPassword : TextView = findViewById(R.id.btnForgotMyPassword)
+        context = applicationContext
+        sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
         firebaseAuth = Firebase.auth
 
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(USER_ID, user.uid)
+                sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                val userId = user?.uid.toString()
+                editor.putString(USER_ID, userId)
+                editor.apply()
                 startActivity(intent)
             }
         }
@@ -68,7 +79,11 @@ class Login : AppCompatActivity() {
                 if(task.isSuccessful){
                     val user = firebaseAuth.currentUser
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra(USER_ID, user?.uid.toString())
+                    sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    val userId = user?.uid.toString()
+                    editor.putString(USER_ID, userId)
+                    editor.apply()
                     startActivity(intent)
                 }else{
                     Toast.makeText(baseContext, getString(R.string.ErrorCheck), Toast.LENGTH_SHORT).show()

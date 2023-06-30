@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.AttendanceStudent
-import com.example.tpintegrador.ui.asistencia.AttendanceStatus
-import com.example.tpintegrador.ui.asistencia.StudentDto
+import com.example.tpintegrador.ui.attendance.AttendanceStatus
+import com.example.tpintegrador.ui.attendance.StudentDto
 import java.util.*
 
 class AttendanceStudentRepository(private val dbHelper: DBHelper) {

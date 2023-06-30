@@ -1,4 +1,4 @@
-package com.example.tpintegrador.ui.asistencia
+package com.example.tpintegrador.ui.attendance
 
 import android.graphics.Color
 import android.os.Bundle
@@ -15,14 +15,14 @@ import com.example.tpintegrador.DataBase.Repository.AttendanceStudentRepository
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
 import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.R
-import com.example.tpintegrador.databinding.FragmentGalleryBinding
+import com.example.tpintegrador.databinding.FragmentAttendanceBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GalleryFragment : Fragment() {
+class AttendanceFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentAttendanceBinding? = null
     private val binding get() = _binding!!
     private lateinit var textViewDate: TextView
     private lateinit var buttonPreviousDay: FloatingActionButton
@@ -46,13 +46,13 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentAttendanceBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val mainActivity = requireActivity() as MainActivity
         courseId = mainActivity.getCourseId()
         val dbHelper = DBHelper(requireContext().applicationContext)
         studentRepository = StudentRepository(dbHelper)
-        studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) }!!
+        studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it.toString()) }!!
         studentDtoList = studentsMap.values.map { it.toStudentDto() }
         textViewDate = binding.textViewDate
         buttonPreviousDay = binding.buttonPreviousDay
@@ -93,7 +93,7 @@ class GalleryFragment : Fragment() {
                         studentDto.attendanceId,
                         formattedDate,
                         studentDto.id.toString(),
-                        courseId,
+                        courseId.toString(),
                         studentDto.attendanceStatus.name,
                         "0"
                     )
@@ -107,7 +107,7 @@ class GalleryFragment : Fragment() {
                     val attendanceStudent = AttendanceStudent(
                         formattedDate,
                         studentDto.id.toString(),
-                        courseId,
+                        courseId.toString(),
                         studentDto.attendanceStatus.name,
                         "0"
                     )

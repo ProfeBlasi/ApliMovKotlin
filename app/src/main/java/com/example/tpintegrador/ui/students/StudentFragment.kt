@@ -1,29 +1,32 @@
-package com.example.tpintegrador.ui.calificacion
+package com.example.tpintegrador.ui.students
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tpintegrador.DataBase.DBHelper
 import com.example.tpintegrador.DataBase.Entities.Student
 import com.example.tpintegrador.DataBase.Entities.StudentAdapter
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
+import com.example.tpintegrador.Login.Login
 import com.example.tpintegrador.MainActivity
-import com.example.tpintegrador.databinding.FragmentSlideshowBinding
+import com.example.tpintegrador.databinding.FragmentStudentBinding
+import com.example.tpintegrador.ui.courses.CoursesFragment.Companion.COURSE_ID
+import com.example.tpintegrador.ui.courses.CoursesFragment.Companion.NAME_COURSE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class SlideshowFragment : Fragment() {
+class StudentFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentStudentBinding? = null
 
     private val binding get() = _binding!!
 
@@ -36,12 +39,13 @@ class SlideshowFragment : Fragment() {
     private lateinit var recyclerViewStudent: RecyclerView
     private lateinit var studentsMap: HashMap<Long, Student>
     private var selectedStudent: Student? = null
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentStudentBinding.inflate(inflater, container, false)
         val root: View = binding.root
         fabAddStudent = binding.fabAddStudent
         layoutCreateStudent = binding.layoutCreateStudent
@@ -50,11 +54,14 @@ class SlideshowFragment : Fragment() {
         val btnCreateStudent = binding.btnCreateStudent
         val btnCancelCreateStudent = binding.btnCancelCreateStudent
         recyclerViewStudent = binding.recyclerViewStudent
+        sharedPreferences = requireContext().getSharedPreferences(Login.PREFERENCES, Context.MODE_PRIVATE)
+        val nameCourse = sharedPreferences.getString(NAME_COURSE, null)
         val mainActivity = requireActivity() as MainActivity
-        val courseId = mainActivity.getCourseId()
+        mainActivity.supportActionBar?.title = nameCourse
+        val courseId = sharedPreferences.getString(COURSE_ID, null)
         dbHelper = DBHelper(requireContext().applicationContext)
         val studentRepository = StudentRepository(dbHelper)
-        studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) } ?: HashMap()
+        studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it.toString()) } ?: HashMap()
         studentAdapter = studentsMap?.let { StudentAdapter(it) }!!
         recyclerViewStudent.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewStudent.adapter = studentAdapter
@@ -87,14 +94,14 @@ class SlideshowFragment : Fragment() {
             }
             clearInputFields()
             showStudentList()
-            studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it) } ?: HashMap()
+            studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it.toString()) } ?: HashMap()
             studentAdapter = studentsMap?.let { StudentAdapter(it) }!!
             recyclerViewStudent.adapter = studentAdapter
         }
 
         studentAdapter.setOnItemClickListener { student ->
             selectedStudent = student
-            val intent = Intent(requireContext(), SlideshowViewModel::class.java)
+            val intent = Intent(requireContext(), StudentShowViewModel::class.java)
             intent.putExtra("EXTRA_STUDENT", selectedStudent)
             startActivity(intent)
         }
