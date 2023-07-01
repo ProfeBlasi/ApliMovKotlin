@@ -32,7 +32,7 @@
     <string name="edtAddressCourse">Address</string>
     <string name="btnCreateCourse">Create</string>
     <string name="btnCancel">Cancel</string>
-    <string name="enterName">You must enter a name</string>
+    <string name="enterName">You must enter a name to the course and school</string>
     <string name="failedCourse">Failed to save course</string>
 
 
@@ -42,7 +42,7 @@
     <string name="nav_header_title">Welcome teacher</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Log out</string>
 
     <string name="menu_home">Courses</string>
     <string name="menu_gallery">Take attendance</string>
@@ -77,4 +77,5 @@
     <string name="cam">Cam</string>
     <string name="courses">Courses</string>
     <string name="create_new_password">Create new password</string>
+    <string name="search_student_by_name">Search student by name</string>
 </resources>

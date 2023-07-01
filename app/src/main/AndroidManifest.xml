@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TpIntegrador"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBQMqYztlbGu5culuNHx1wxAd0AHTtfJ8I" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -36,9 +39,7 @@
         <activity
             android:name=".Login.RememberPassword"
             android:exported="false" />
-        <activity
-            android:name="com.example.tpintegrador.ui.courses.CoursesViewModel"
-            tools:ignore="Instantiatable" />
+        <activity android:name="com.example.tpintegrador.ui.students.StudentShowViewModel" />
         <activity
             android:name=".Login.CreateAccountActivity"
             android:exported="false" />

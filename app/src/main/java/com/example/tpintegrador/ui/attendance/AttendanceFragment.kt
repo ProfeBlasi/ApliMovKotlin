@@ -1,5 +1,7 @@
 package com.example.tpintegrador.ui.attendance
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
@@ -13,9 +15,11 @@ import com.example.tpintegrador.DataBase.Entities.AttendanceStudent
 import com.example.tpintegrador.DataBase.Entities.Student
 import com.example.tpintegrador.DataBase.Repository.AttendanceStudentRepository
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
+import com.example.tpintegrador.Login.Login
 import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.R
 import com.example.tpintegrador.databinding.FragmentAttendanceBinding
+import com.example.tpintegrador.ui.courses.CoursesFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +35,7 @@ class AttendanceFragment : Fragment() {
     private lateinit var btnToRegister: Button
     private val calendar: Calendar = Calendar.getInstance()
     private var isSelectingMonths: Boolean = false
-    private lateinit var courseId: String
+    private var courseId: String? = null
     private lateinit var studentsMap: HashMap<Long, Student>
     private lateinit var studentDtoList: List<StudentDto>
     private lateinit var editedStudentDtoList: List<StudentDto>
@@ -41,6 +45,7 @@ class AttendanceFragment : Fragment() {
     private lateinit var studentRepository: StudentRepository
     private lateinit var studentContainer: LinearLayout
     private lateinit var formattedDate: String
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,8 +53,12 @@ class AttendanceFragment : Fragment() {
     ): View {
         _binding = FragmentAttendanceBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        sharedPreferences = requireContext().getSharedPreferences(Login.PREFERENCES, Context.MODE_PRIVATE)
+        courseId = sharedPreferences.getString(CoursesFragment.COURSE_ID, null)
+        val nameCourse = sharedPreferences.getString(CoursesFragment.NAME_COURSE, null)
         val mainActivity = requireActivity() as MainActivity
-        courseId = mainActivity.getCourseId()
+        mainActivity.supportActionBar?.title = nameCourse
+        if(courseId == null) courseId = "0"
         val dbHelper = DBHelper(requireContext().applicationContext)
         studentRepository = StudentRepository(dbHelper)
         studentsMap = courseId?.let { studentRepository.getAllStudentsMap(it.toString()) }!!
@@ -62,7 +71,7 @@ class AttendanceFragment : Fragment() {
         studentContainer = binding.studentContainer
         attendanceStudentRepository = AttendanceStudentRepository(dbHelper)
         updateDate()
-        getAttendanceStudentsByDay(formattedDate)
+        getAttendanceStudentsByDay(formattedDate,courseId)
         textViewDate.setOnClickListener {
             changeToSelectionByMonth()
         }
@@ -86,7 +95,10 @@ class AttendanceFragment : Fragment() {
         }
 
         btnToRegister.setOnClickListener {
-
+            if(studentDtoList.isEmpty()){
+                Toast.makeText(requireContext().applicationContext, "There is no course selected or you have no students", Toast.LENGTH_SHORT).show()
+                requireActivity().onBackPressed()
+            }
             if (recordsExist) {
                 for (studentDto in editedStudentDtoList) {
                     val attendanceStudent = AttendanceStudent(
@@ -169,15 +181,15 @@ class AttendanceFragment : Fragment() {
         val currentDate: Date = calendar.time
         formattedDate = dateFormat.format(currentDate)
         textViewDate.text = formattedDate
-        getAttendanceStudentsByDay(formattedDate)
+        getAttendanceStudentsByDay(formattedDate, courseId)
     }
 
-    private fun getAttendanceStudentsByDay(attendanceDay: String){
-        val attendanceStudents = attendanceStudentRepository.getAttendanceStudentsByDay(attendanceDay)
+    private fun getAttendanceStudentsByDay(attendanceDay: String, courseId: String?){
+        val attendanceStudents = attendanceStudentRepository.getAttendanceStudentsByDay(attendanceDay,courseId)
         if (attendanceStudents.isNotEmpty()) {
             btnToRegister.text = "edit"
             recordsExist = true
-            val studentDtoList = studentsMap.values.mapNotNull { student ->
+            studentDtoList = studentsMap.values.mapNotNull { student ->
                 val attendanceStatus = attendanceStudents.find { it.id == student.id }?.attendanceStatus
                     ?: AttendanceStatus.NO_INFORMATION
                 val attendanceId = attendanceStudents.find { it.id == student.id }?.attendanceId
@@ -215,6 +227,8 @@ class AttendanceFragment : Fragment() {
     }
 
     private fun loadStudentsBtn(listStudent: List<StudentDto>): List<StudentDto> {
+        studentContainer.removeAllViews() // Eliminar vistas anteriores
+
         val scrollView = ScrollView(requireContext())
         scrollView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -222,6 +236,7 @@ class AttendanceFragment : Fragment() {
         )
         val linearLayout = LinearLayout(requireContext())
         linearLayout.orientation = LinearLayout.VERTICAL
+
         for (studentDto in listStudent) {
             val studentButton = Button(requireContext())
             studentButton.text = "${studentDto.lastName} ${studentDto.nameStudent}"
@@ -243,10 +258,13 @@ class AttendanceFragment : Fragment() {
 
             linearLayout.addView(studentButton)
         }
+
         scrollView.addView(linearLayout)
         studentContainer.addView(scrollView)
+
         return listStudent
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

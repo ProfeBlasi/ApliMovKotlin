@@ -1,10 +1,8 @@
 package com.example.tpintegrador.DataBase.Entities
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tpintegrador.R
@@ -45,4 +43,11 @@ class StudentAdapter(private val studentsMap: HashMap<Long, Student>) : Recycler
         studentsMap.putAll(updatedStudents)
         notifyDataSetChanged()
     }
+
+    fun updateData(updatedStudents: HashMap<Long, Student>) {
+        studentsMap.clear()
+        studentsMap.putAll(updatedStudents)
+        notifyDataSetChanged()
+    }
+
 }
