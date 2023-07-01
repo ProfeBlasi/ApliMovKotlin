@@ -10,13 +10,12 @@
     style="@style/BalloonStyle">
     <TextView
         android:id="@+id/edtNameStudent"
-        style="@style/BalloonStyleName"
+        style="@style/BalloonStyleName2"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:textStyle="bold" />
+        android:layout_marginRight="8dp" />
     <TextView
         android:id="@+id/edtLastNameStudent"
-        style="@style/BalloonStyleName"
+        style="@style/BalloonStyleName2"
         android:layout_marginRight="8dp" />
 </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -51,7 +51,7 @@ class StudentShowViewModel : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalle_alumno)
+        setContentView(R.layout.activity_detail_student)
         val dbHelper = DBHelper(baseContext)
         studentRepository = StudentRepository(dbHelper)
         txtLastName = findViewById(R.id.txtLastName)

@@ -15,8 +15,8 @@ class AttendanceStudentRepository(private val dbHelper: DBHelper) {
         val contentValues = ContentValues()
         contentValues.put(DBHelper.COLUMN_ATTENDANCE_DAY, attendanceStudent.attendanceDay)
         contentValues.put(DBHelper.COLUMN_STUDENT_ID, attendanceStudent.studentId)
-        contentValues.put(DBHelper.COLUMN_ATTENDANCE_COURSE_ID, attendanceStudent.courseId)
-        contentValues.put(DBHelper.COLUMN_ATTENDANCE_STUDENT_STATUS, attendanceStudent.attendanceStatus)
+        contentValues.put(DBHelper.COLUMN_ATTENDANCE_COURSE_ID, attendanceStudent.attendanceCourseId)
+        contentValues.put(DBHelper.COLUMN_ATTENDANCE_STUDENT_STATUS, attendanceStudent.attendanceStudentStatus)
         contentValues.put(DBHelper.COLUMN_REFERENCE_ID, attendanceStudent.referenceId)
 
         return db.insert(DBHelper.TABLE_NAME_ATTENDANCE_STUDENT, null, contentValues)
@@ -27,8 +27,8 @@ class AttendanceStudentRepository(private val dbHelper: DBHelper) {
         val contentValues = ContentValues()
         contentValues.put(DBHelper.COLUMN_ATTENDANCE_DAY, attendanceStudent.attendanceDay)
         contentValues.put(DBHelper.COLUMN_STUDENT_ID, attendanceStudent.studentId)
-        contentValues.put(DBHelper.COLUMN_ATTENDANCE_COURSE_ID, attendanceStudent.courseId)
-        contentValues.put(DBHelper.COLUMN_ATTENDANCE_STUDENT_STATUS, attendanceStudent.attendanceStatus)
+        contentValues.put(DBHelper.COLUMN_ATTENDANCE_COURSE_ID, attendanceStudent.attendanceCourseId)
+        contentValues.put(DBHelper.COLUMN_ATTENDANCE_STUDENT_STATUS, attendanceStudent.attendanceStudentStatus)
         contentValues.put(DBHelper.COLUMN_REFERENCE_ID, attendanceStudent.referenceId)
 
         return db.update(
@@ -66,11 +66,12 @@ class AttendanceStudentRepository(private val dbHelper: DBHelper) {
     }
 
     @SuppressLint("Range")
-    fun getAttendanceStudentsByDay(attendanceDay: String): List<StudentDto> {
+    fun getAttendanceStudentsByDay(attendanceDay: String, courseId: String?): List<StudentDto> {
         val attendanceStudents = mutableListOf<StudentDto>()
         val db = dbHelper.writableDatabase
-        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_ATTENDANCE_STUDENT} WHERE ${DBHelper.COLUMN_ATTENDANCE_DAY} = ?"
-        val cursor = db.rawQuery(selectQuery, arrayOf(attendanceDay))
+        val selectQuery = "SELECT * FROM ${DBHelper.TABLE_NAME_ATTENDANCE_STUDENT} WHERE ${DBHelper.COLUMN_ATTENDANCE_DAY} = ? AND ${DBHelper.COLUMN_ATTENDANCE_COURSE_ID} = ?"
+        val selectionArgs = arrayOf(attendanceDay, courseId)
+        val cursor = db.rawQuery(selectQuery, selectionArgs)
         if (cursor.moveToFirst()) {
             do {
                 val studentId = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_STUDENT_ID))
