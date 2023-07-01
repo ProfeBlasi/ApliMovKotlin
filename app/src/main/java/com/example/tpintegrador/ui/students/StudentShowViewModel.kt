@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +19,11 @@ import com.example.tpintegrador.DataBase.Entities.Student
 import com.example.tpintegrador.DataBase.Repository.StudentRepository
 import com.example.tpintegrador.MainActivity
 import com.example.tpintegrador.R
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StudentShowViewModel : AppCompatActivity() {
     private lateinit var txtLastName: TextView
@@ -26,7 +33,6 @@ class StudentShowViewModel : AppCompatActivity() {
     private lateinit var txtBirthDate: TextView
     private lateinit var txtDocument: TextView
     private lateinit var txtEmail: TextView
-    private lateinit var txtState: TextView
     private lateinit var txtAddress: TextView
     private lateinit var edtLastName: EditText
     private lateinit var edtName: EditText
@@ -35,7 +41,6 @@ class StudentShowViewModel : AppCompatActivity() {
     private lateinit var edtBirthdate: EditText
     private lateinit var edtDocument: EditText
     private lateinit var edtEmailStudent: EditText
-    private lateinit var edtState: EditText
     private lateinit var edtAddress: EditText
     private lateinit var btnUpdateStudent: Button
     private lateinit var btnDelete: Button
@@ -46,7 +51,7 @@ class StudentShowViewModel : AppCompatActivity() {
     private lateinit var imgPhoto: ImageView
     private lateinit var studentRepository: StudentRepository
     private lateinit var student: Student
-
+    private var photoPath : String = ""
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +66,6 @@ class StudentShowViewModel : AppCompatActivity() {
         txtBirthDate = findViewById(R.id.txtBirthDate)
         txtDocument = findViewById(R.id.txtDocument)
         txtEmail = findViewById(R.id.txtEmail)
-        txtState = findViewById(R.id.txtState)
         txtAddress = findViewById(R.id.txtAddress)
         edtLastName = findViewById(R.id.edtLastName)
         edtName = findViewById(R.id.edtName)
@@ -70,7 +74,6 @@ class StudentShowViewModel : AppCompatActivity() {
         edtBirthdate = findViewById(R.id.edtBirthdate)
         edtDocument = findViewById(R.id.edtDocument)
         edtEmailStudent = findViewById(R.id.edtEmailStudent)
-        edtState = findViewById(R.id.edtState)
         edtAddress = findViewById(R.id.edtAddress)
         btnUpdateStudent = findViewById(R.id.btnUpdateStudent)
         btnDelete = findViewById(R.id.btnDelete)
@@ -81,7 +84,11 @@ class StudentShowViewModel : AppCompatActivity() {
 
         if (student != null) {
             showStudentDetails(student)
+            if(student.state?.isNotEmpty() == true){
+                loadPhoto(student.state!!)
+            }
         }
+
 
         btnUpdateStudent.setOnClickListener {
             if (student != null) {
@@ -93,7 +100,10 @@ class StudentShowViewModel : AppCompatActivity() {
                 val updatedBirthdate = edtBirthdate.text.toString()
                 val updatedDocument = edtDocument.text.toString()
                 val updatedEmail = edtEmailStudent.text.toString()
-                val updatedState = edtState.text.toString()
+                var updatedState = student.state
+                    if(photoPath.isNotEmpty()){
+                        updatedState = photoPath
+                }
                 student!!.lastName = updatedLastName
                 student!!.nameStudent = updatedName
                 student!!.address = updatedAddress
@@ -129,7 +139,6 @@ class StudentShowViewModel : AppCompatActivity() {
         }
     }
 
-
     private fun showStudentDetails(student: Student?) {
         edtLastName.setText(student?.lastName)
         edtName.setText(student?.nameStudent)
@@ -139,7 +148,15 @@ class StudentShowViewModel : AppCompatActivity() {
         edtBirthdate.setText(student?.birthdate)
         edtDocument.setText(student?.document)
         edtEmailStudent.setText(student?.email)
-        edtState.setText(student?.state)
+    }
+
+
+    private fun loadPhoto(photoPath: String) {
+        val file = File(photoPath)
+        if (file.exists()) {
+            val photoUri = Uri.fromFile(file)
+            imgPhoto.setImageURI(photoUri)
+        }
     }
 
     private fun showDialogConfirmationDelete(student: Student) {
@@ -184,7 +201,26 @@ class StudentShowViewModel : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             val extras = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap
-            imgPhoto.setImageBitmap(imageBitmap)
+            photoPath = saveImageToStorage(imageBitmap)!!
         }
     }
+
+    private fun saveImageToStorage(imageBitmap: Bitmap): String? {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_$timeStamp.jpg"
+
+        try {
+            val imageFile = File(storageDir, imageFileName)
+            val outputStream = FileOutputStream(imageFile)
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            return imageFile.absolutePath
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
 }
