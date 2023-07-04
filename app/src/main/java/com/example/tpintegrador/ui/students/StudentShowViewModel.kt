@@ -53,7 +53,7 @@ class StudentShowViewModel : AppCompatActivity() {
     private lateinit var student: Student
     private var photoPath : String = ""
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_student)
